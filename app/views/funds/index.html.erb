@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Funds</h1>
+<button type="button" class="btn btn-lg btn-danger" data-bs-toggle="popover" data-bs-title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
+<div id="funds">
+  <% @funds.each do |fund| %>
+    <%= render fund %>
+    <p>
+      <%= link_to "Show this fund", fund %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New fund", new_fund_path %>
