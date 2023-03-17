@@ -1,0 +1,17 @@
+<h1>Mutual Fund NAVs</h1>
+<table class="table table-success table-striped">
+  <thead>
+    <tr>
+      <th>Scheme Name</th>
+      <th>Code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @all_funds.each do |mutual_fund| %>
+      <tr>
+        <td><%= mutual_fund['schemeName'] %></td>
+        <td><%= mutual_fund['schemeCode'] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

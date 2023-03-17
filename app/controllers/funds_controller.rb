@@ -3,9 +3,12 @@ class FundsController < ApplicationController
 
   # GET /funds or /funds.json
   def index
+    url = "https://api.mfapi.in/mf"
+    response = Faraday.get(url)
+    @all_funds = JSON.parse(response.body)
     @funds = Fund.all
   end
-
+  
   # GET /funds/1 or /funds/1.json
   def show
   end
