@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_03_18_065509) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "funds", force: :cascade do |t|
     t.string "fund_name"
     t.string "amc_name"
@@ -20,7 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_18_065509) do
     t.string "goal_name"
     t.string "fund_type"
     t.integer "folio_number"
-    t.integer "member_id", null: false
+    t.bigint "member_id", null: false
     t.date "nav_at"
     t.float "nav"
     t.index ["member_id"], name: "index_funds_on_member_id"
@@ -34,7 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_18_065509) do
   end
 
   create_table "transactions", force: :cascade do |t|
-    t.integer "fund_id", null: false
+    t.bigint "fund_id", null: false
     t.date "transaction_date"
     t.string "transaction_type"
     t.float "amount"
