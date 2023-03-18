@@ -1,0 +1,60 @@
+<div class='card m-2'>
+  <div class='card-body'>
+    <div class='row'>
+      <div
+        class="
+          col-xxl-3
+          col-md-6
+          px-3
+          text-center
+          border-end
+          border-bottom-xxl-0
+          pb-3
+          p-xxl-0
+          ps-md-0
+        "
+      >
+        <h4 class="mb-1 font-sans-serif"><span class="text-700 mx-2">4,968</span><span class="fw-normal text-600">New Learners</span></h4>
+      </div>
+      <div
+        class="
+          col-xxl-3
+          col-md-6
+          px-3
+          text-center
+          border-end-xxl
+          border-bottom-xxl-0
+          pb-3
+          pt-4
+          pt-md-0
+          pe-md-0
+          p-xxl-0
+        "
+      >
+        sdfsf
+      </div>
+    </div>
+  </div>
+</div>
+<div class='mt-2 card'>
+  <table class="table table-success table-striped">
+    <thead>
+      <tr>
+        <th>Scheme Name</th>
+        <th>Invested Amount</th>
+        <th>As Of</th>
+        <th>Current Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @records.each do |rec| %>
+        <tr>
+          <td><%= rec.fund_name %></td>
+          <td><%= number_to_indian_currency(rec.amount.round(2)) %></td>
+          <td><%= rec.nav_at.strftime("%m/%d/%Y") %></td>
+          <td><%= number_to_indian_currency((rec.nav * rec.units).round(2)) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
