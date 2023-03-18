@@ -23,6 +23,8 @@ class FundDashboard < Administrate::BaseDashboard
     ),
     fund_code: Field::Number,
     folio_number: Field::Number,
+    nav_at: Field::Date,
+    nav: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -37,6 +39,8 @@ class FundDashboard < Administrate::BaseDashboard
     member
     goal_name
     fund_name
+    nav_at
+    nav
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
