@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_18_095050) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_19_065605) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "fixed_assets", force: :cascade do |t|
+    t.bigint "member_id", null: false
+    t.string "goal_name"
+    t.float "amount"
+    t.string "source"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_id"], name: "index_fixed_assets_on_member_id"
+  end
 
   create_table "funds", force: :cascade do |t|
     t.string "fund_name"
@@ -47,6 +57,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_18_095050) do
     t.index ["fund_id"], name: "index_transactions_on_fund_id"
   end
 
+  add_foreign_key "fixed_assets", "members"
   add_foreign_key "funds", "members"
   add_foreign_key "transactions", "funds"
 

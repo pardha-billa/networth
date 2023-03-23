@@ -281,6 +281,13 @@ jquery@>=1.7:
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.4.tgz#ba065c188142100be4833699852bf7c24dc0252f"
   integrity sha512-v28EW9DWDFpzcD9O5iyJXg3R3+q+mET5JhnjJzQUZMHOv67bpSIHq81GEYpPNZHG+XXHsfSme3nxp/hndKEcsQ==
 
+list.js@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/list.js/-/list.js-2.3.1.tgz#48961989ffe52b0505e352f7a521f819f51df7e7"
+  integrity sha512-jnmm7DYpKtH3DxtO1E2VNCC9Gp7Wrp/FWA2JxQrZUhVJ2RCQBd57pCN6W5w6jpsfWZV0PCAbTX2NOPgyFeeZZg==
+  dependencies:
+    string-natural-compare "^2.0.2"
+
 normalize-path@^3.0.0, normalize-path@~3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-3.0.0.tgz#0dcd69ff23a1c9b11fd0978316644a0388216a65"
@@ -311,6 +318,11 @@ sass@^1.59.3:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.0.2.tgz#adbc361d9c62df380125e7f161f71c826f1e490c"
   integrity sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==
+
+string-natural-compare@^2.0.2:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/string-natural-compare/-/string-natural-compare-2.0.3.tgz#9dbe1dd65490a5fe14f7a5c9bc686fc67cb9c6e4"
+  integrity sha512-4Kcl12rNjc+6EKhY8QyDVuQTAlMWwRiNbsxnVwBUKFr7dYPQuXVrtNU4sEkjF9LHY0AY6uVbB3ktbkIH4LC+BQ==
 
 to-regex-range@^5.0.1:
   version "5.0.1"

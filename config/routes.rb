@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   namespace :admin do
-      resources :funds
       resources :members
+      resources :funds
       resources :transactions
-      root to: "funds#index"
+      resources :fixed_assets
+      root to: "members#index"
     end
   resources :funds
   resources :retirement_portfolio

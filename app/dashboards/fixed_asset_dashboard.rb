@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class FundDashboard < Administrate::BaseDashboard
+class FixedAssetDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -16,15 +16,8 @@ class FundDashboard < Administrate::BaseDashboard
     goal_name: Field::Select.with_options(
       collection: ['Retirement','Rent','Education-LongTerm']
     ),
-    amc_name: Field::String,
-    fund_name: Field::String,
-    fund_type: Field::Select.with_options(
-      collection: ['Equity','Debt']
-    ),
-    fund_code: Field::Number,
-    folio_number: Field::Number,
-    nav_at: Field::Date,
-    nav: Field::Number,
+    source: Field::String,
+    amount: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -38,19 +31,18 @@ class FundDashboard < Administrate::BaseDashboard
     id
     member
     goal_name
-    fund_name
-    nav_at
-    nav
+    source
+    amount
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     id
-    amc_name
-    fund_name
-    created_at
-    updated_at
+    member
+    goal_name
+    source
+    amount
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -59,13 +51,8 @@ class FundDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     member
     goal_name
-    amc_name
-    fund_name
-    fund_type
-    fund_code
-    nav_at
-    nav
-    folio_number
+    source
+    amount
   ].freeze
 
   # COLLECTION_FILTERS
@@ -83,7 +70,5 @@ class FundDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how funds are displayed
   # across all pages of the admin dashboard.
   #
-  def display_resource(fund)
-    "#{fund.fund_name} (#{fund.member.name})"
-  end
+ 
 end

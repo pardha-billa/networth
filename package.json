@@ -9,6 +9,7 @@
     "bootstrap-icons": "^1.10.3",
     "datatables.net-bs5": "^1.13.4",
     "esbuild": "^0.17.11",
+    "list.js": "^2.3.1",
     "sass": "^1.59.3"
   },
   "scripts": {

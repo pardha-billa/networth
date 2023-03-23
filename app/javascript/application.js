@@ -3,6 +3,7 @@ import "@hotwired/turbo-rails"
 import "./controllers"
 import * as bootstrap from "bootstrap"
 import DataTable from 'datatables.net-bs5';
+import listInit from "./lists";
 
 window.DataTable = DataTable
 document.addEventListener("turbo:load", () => {
@@ -10,8 +11,5 @@ document.addEventListener("turbo:load", () => {
     const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
     ele = document.getElementById('example')
     let table = new DataTable('#example');
+    listInit();
   })
-
-  document.addEventListener('DOMContentLoaded', function () {
- 
-    });

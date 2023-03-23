@@ -1,6 +1,6 @@
 class UpdateFundNavs
     def self.process
-        codes = Fund.pluck(:fund_code).uniq
+        codes = Fund.pluck(:fund_code).compact.uniq
         codes.each do |code|
             response = FindNav.new(code).process
             if response
