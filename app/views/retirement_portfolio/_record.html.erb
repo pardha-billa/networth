@@ -1,0 +1,35 @@
+<% cng = fund.cur_value - fund.inv_value%>
+<div class="accordion-item">
+  <h2 class="accordion-header" id="heading<%=fund.units.to_i%>">
+    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%=fund.units.to_i%>" aria-expanded="true" aria-controls="collapse<%=fund.units.to_i%>">
+      <%=fund.fund_name%>
+      <span class='ms-auto me-2 change <%= cng > 0 ? 'text-success' : 'text-danger'%>' data-change=<%=cng%> >(<%= number_to_indian_currency((cng).round(2)) %>)</span>
+    </button>
+  </h2>
+  <div class="accordion-collapse collapse" id="collapse<%=fund.units.to_i%>" aria-labelledby="heading<%=fund.units.to_i%>" data-bs-parent="#accordionExample">
+    <div class="accordion-body">
+      <div class='card' data-list='{"valueNames":[{"name" : "transaction_date","attr" :"data-inv"},{"name" : "amount","attr" :"data-amount"},{"name" : "nav","attr" :"data-nav"}]}'>
+        <% transactions = @funds.select{|x| x.fund_name == fund.fund_name} %>
+        <table class="table table-sm fs--1 mb-0 overflow-hidden">
+          <thead class= 'bg-200 text-900'>
+            <tr>
+              <th class="sort align-middle fw-medium" data-sort='transaction_date'>Transaction Date</th>
+              <th class="sort align-middle fw-medium" data-sort='amount'>Amount</th>
+              <th class="sort align-middle fw-medium" data-sort='nav'>Nav</th>
+            </tr>
+          </thead>
+          <tbody class='list'>
+            <% transactions.each do |rec| %>
+              <tr>
+                <td class='transaction_date' data-inv=<%=rec.transaction_date%>><%=(rec.transaction_date.strftime('%d/%m/%Y')) %></td>
+                <td class='amount' data-amount=<%=(rec.amount)%>><%= number_to_indian_currency((rec.amount).round(2)) %></td>
+                <% cng = rec.fun_nav - rec.tr_nav%>
+                <td class='nav <%= cng > 0 ? 'text-success' : 'text-danger'%>' data-nav=<%=rec.tr_nav%> ><%= ((rec.tr_nav).round(2)) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

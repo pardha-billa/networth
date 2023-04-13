@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_19_065605) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_28_170805) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -63,12 +63,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_19_065605) do
 
   create_view "retirement_portfolios", sql_definition: <<-SQL
       SELECT funds.fund_name,
-      funds.nav,
-      funds.nav_at,
-      sum(transactions.amount) AS amount,
+      max(funds.nav_at) AS nav_at,
+      sum(transactions.amount) AS inv_value,
+      sum(((transactions.amount / transactions.nav) * funds.nav)) AS cur_value,
       sum((transactions.amount / transactions.nav)) AS units
      FROM (funds
        JOIN transactions ON ((funds.id = transactions.fund_id)))
-    GROUP BY funds.fund_name, funds.nav, funds.nav_at;
+    GROUP BY funds.fund_name;
   SQL
 end

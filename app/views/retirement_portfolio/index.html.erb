@@ -1,45 +1,103 @@
 <div class="d-flex mb-4 mt-6">
   <div class="col">
     <h5 class="mb-0 text-primary position-relative">
-    <span class="bg-200 dark__bg-1100 pe-3">Retirement Portfolio</span>
-    <%=tag.span class: %w(border position-absolute top-50 translate-middle-y w-100 start-0 z-n1 )%>
+      <span class="bg-200 dark__bg-1100 pe-3">Retirement Portfolio</span>
+      <%=tag.span class: %w(border position-absolute top-50 translate-middle-y w-100 start-0 z-n1 )%>
     </h5>
     <p class="mb-0">Including Equity(Mutual Funds, ETFs) and Debt</p>
   </div>
 </div>
-<%= render partial: "aggregate" %>
-<div class='mt-2 card' data-list='{"valueNames":["fund_name",{"name" : "inv","attr" :"data-inv"},{"name" : "cur","attr" :"data-cur"},{"name" : "change","attr" :"data-change"}]}'>
-<div class = 'card-header bg-light'>
- As Of - (<%= @records.first.nav_at.strftime("%m/%d/%Y") %>)
- <%= tag.span class: " me-3 float-end fs-5 #{@profit > 0 ? 'text-primary' : 'text-danger'}"  do %>
- <%= number_to_indian_currency(@profit) %>
- <% end %>
-</div>
-
-<div class= 'card-body'> 
-  <table class="table table-sm fs--1 mb-0 overflow-hidden">
-    <thead class= 'bg-200 text-900'>
-      <tr>
-        <th class="sort align-middle fw-medium" data-sort='fund_name'>Scheme Name</th>
-        <th class="sort align-middle fw-medium" data-sort='inv'>Invested Amount</th>
-        <th class="sort align-middle fw-medium" data-sort='cur'>Current Amount</th>
-        <th class="sort align-middle fw-medium" data-sort='change'>Change</th>
-      </tr>
-    </thead>
-    <tbody class='list'>
-      <% @records.each do |rec| %>
-        <tr>
-          <td class='fund_name'><%= rec.fund_name %></td>
-          <td class='inv' data-inv=<%=rec.amount%>><%= number_to_indian_currency(rec.amount.round(2)) %></td>
-          <td class='cur' data-cur=<%=(rec.nav * rec.units)%>><%= number_to_indian_currency((rec.nav * rec.units).round(2)) %></td>
-          <% cng =(rec.nav * rec.units) - rec.amount%>
-          <td class='change <%= cng > 0 ? 'text-success' : 'text-danger'%>' data-change=<%=cng%> ><%= number_to_indian_currency((cng).round(2)) %></td>
-
-        </tr>
+<%#= render partial: "aggregate" %>
+<div class='row'>
+  <div class='mt-2 card col-md-8' data-list='{"valueNames":["fund_name",{"name" : "xirr","attr" :"data-xirr"},{"name" : "inv","attr" :"data-inv"},{"name" : "cur","attr" :"data-cur"}]}'>
+    <div class = 'card-header bg-light'>
+      As Of - (<%= @records.first.nav_at.strftime("%m/%d/%Y") %>)
+      <%= tag.span class: " me-3 float-end fs-5 #{@profit > 0 ? 'text-primary' : 'text-danger'}"  do %>
+        <%= number_to_indian_currency(@profit) %>
       <% end %>
-    </tbody>
-  </table>
-
+    </div>
+    <div class= 'card-body'>
+      <table class="table table-sm fs--1 mb-0 overflow-hidden">
+        <thead class= 'bg-200 text-900'>
+          <tr>
+            <th class="sort align-middle fw-medium" data-sort='fund_name'>Scheme Name</th>
+            <th class="sort align-middle fw-medium" data-sort='inv'>Invested Amount</th>
+            <th class="sort align-middle fw-medium" data-sort='cur'>Current Amount</th>
+            <th class="sort align-middle fw-medium" data-sort='xirr'>Xirr</th>
+          </tr>
+        </thead>
+        <tbody class='list'>
+          <% @records.each do |rec| %>
+            <tr>
+              <td class='fund_name'><%= rec.fund_name %></td>
+              <td class='inv' data-inv=<%=rec.inv_value%>><%= number_to_indian_currency(rec.inv_value.round(2)) %></td>
+              <td class='cur' data-cur=<%=(rec.cur_value)%>><%= number_to_indian_currency((rec.cur_value).round(2)) %></td>
+              <% xirr = @irr.find{|x| x[:fund_name] == rec.fund_name}[:xirr]%>
+              <td class='xirr <%= xirr > 0 ? 'text-success' : 'text-danger'%>' data-xirr=<%=(xirr)%>><%= xirr %>%</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
-  
+  <div class="col-md-4 mt-2">
+    <div class="card">
+      <div class="card-header bg-light btn-reveal-trigger d-flex flex-between-center">
+        <h5 class="mb-0">Summary</h5>
+      </div>
+      <div class="card-body">
+        <table class="table table-borderless fs--1 mb-0">
+          <tbody>
+            <tr class="border-bottom">
+              <th class="ps-0 pt-0">Oldest Transaction
+              </th>
+              <th class="pe-0 text-end pt-0"><%=@funds.sort_by(&:transaction_date).first.transaction_date.strftime('%m/%d/%y')%></th>
+            </tr>
+            <tr class="border-bottom">
+              <th class="ps-0">Equity Xirr
+              </th>
+              <th class="pe-0 text-end"><%= @xirr%> %</th>
+            </tr>
+            <tr class="border-bottom">
+              <th class="ps-0">Debt Xirr</th>
+              <th class="pe-0 text-end">7.1 %</th>
+            </tr>
+            <tr class="border-bottom">
+              <th class="ps-0"><span class="text-success"> Asset Holdings</span></th>
+              <th class="pe-0 text-end"></th>
+            </tr>
+            <tr class="border-bottom">
+              <th class="ps-0">Equity</th>
+              <th class="pe-0 text-end"><%=number_to_indian_currency(@equity)%></th>
+            </tr>
+            <tr>
+              <th class="ps-0 pb-0">Debt</th>
+              <th class="pe-0 text-end pb-0"><%= number_to_indian_currency(@debt)%></th>
+            </tr>
+            <tr class="border-bottom">
+              <th class="ps-0"><span class="text-success"> Asset Allocation</span></th>
+              <th class="pe-0 text-end"></th>
+            </tr>
+            <tr class="border-bottom">
+              <th class="ps-0">Equity</th>
+              <th class="pe-0 text-end"><%= @ep%> %</th>
+            </tr>
+            <tr>
+              <th class="ps-0 pb-0">Debt</th>
+              <th class="pe-0 text-end pb-0"><%= @dp%> %</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer d-flex justify-content-between bg-light">
+        <div class="fw-semi-bold">Total</div>
+        <div class="fw-bold"><%= number_to_indian_currency(((@equity+@debt)).round(0))%></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='card bg-light mt-3 col-md-12'>
+  <div class="accordion" id="accordionExample">
+    <%#= render partial: 'record', collection: @records, as: :fund %>
+  </div>
 </div>
