@@ -22,4 +22,8 @@ test:
 
 production:
   <<: *default
-  database: networth_production
+  host: "<%=Rails.application.credentials[:db_host]%>"
+  database: "<%= Rails.application.credentials[:db_database]%>"
+  username: "<%= Rails.application.credentials[:db_user]%>"
+  password: "<%= Rails.application.credentials[:db_password]%>"
+
